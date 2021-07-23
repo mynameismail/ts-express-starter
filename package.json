@@ -4,6 +4,7 @@
   "description": "starter kit for typescript express",
   "main": "dist/server.js",
   "scripts": {
+    "build": "tsc",
     "serve": "concurrently \"tsc -w\" \"nodemon dist/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
