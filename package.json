@@ -4,8 +4,9 @@
   "description": "starter kit for typescript express",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
-    "serve": "concurrently \"tsc -w\" \"nodemon dist/server.js\"",
+    "build": "rm -rf ./dist/* && tsc && cp -r ./src/views ./src/public ./dist",
+    "start": "npm run build && node dist/server.js",
+    "serve": "nodemon --watch src -e ts,ejs --exec \"npm run start\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
