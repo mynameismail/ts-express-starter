@@ -9,6 +9,9 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// static
+app.use('/static', express.static(path.join(__dirname, 'public')))
+
 // api routes
 var api = express.Router();
 api.get('/', (req, res) => {
