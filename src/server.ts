@@ -15,6 +15,8 @@ app.set('view engine', 'ejs');
 app.use(helmet());
 app.use(compression());
 app.use(morgan('tiny'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // static
