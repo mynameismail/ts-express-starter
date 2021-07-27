@@ -4,6 +4,7 @@
   "description": "starter kit for typescript express",
   "main": "dist/server.js",
   "scripts": {
+    "setup": "cp ./.env.example ./.env && npm install",
     "build": "rm -rf ./dist/* && tsc && cp -r ./src/views ./src/public ./dist",
     "start": "node dist/server.js",
     "serve": "nodemon --watch src -e ts,ejs --exec \"npm run build && npm run start\"",
