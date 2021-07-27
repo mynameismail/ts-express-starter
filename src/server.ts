@@ -30,6 +30,14 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+app.use((req, res, next) => {
+    res.status(404).send('page not found');
+});
+
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    res.status(500).send('something wrong');
+});
+
 // run server
 const port = process.env.APP_PORT;
 app.listen(port, () => console.log(`server running on port ${port}`));
