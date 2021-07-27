@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
+import morgan from 'morgan';
 
 dotenv.config();
 
@@ -13,6 +14,8 @@ app.set('view engine', 'ejs');
 
 app.use(helmet());
 app.use(compression());
+
+app.use(morgan('tiny'));
 
 // static
 app.use('/static', express.static(path.join(__dirname, 'public')))
