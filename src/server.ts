@@ -2,6 +2,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import express from 'express';
 import helmet from 'helmet';
+import compression from 'compression';
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(helmet());
+app.use(compression());
 
 // static
 app.use('/static', express.static(path.join(__dirname, 'public')))
