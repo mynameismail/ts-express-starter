@@ -14,11 +14,12 @@ app.set('view engine', 'ejs');
 
 app.use(helmet());
 app.use(compression());
-
 app.use(morgan('tiny'));
+
 
 // static
 app.use('/static', express.static(path.join(__dirname, 'public')))
+
 
 // api routes
 var api = express.Router();
@@ -28,11 +29,14 @@ api.get('/', (req, res) => {
 
 app.use('/api', api);
 
+
 // web routes
 app.get('/', (req, res) => {
     res.render('index');
 });
 
+
+// handle 404 and 500
 app.use((req, res, next) => {
     res.status(404).send('page not found');
 });
@@ -40,6 +44,7 @@ app.use((req, res, next) => {
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     res.status(500).send('something wrong');
 });
+
 
 // run server
 const port = process.env.APP_PORT;
