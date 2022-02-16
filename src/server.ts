@@ -6,10 +6,11 @@ import compression from 'compression';
 import morgan from 'morgan';
 import session from 'express-session';
 
+dotenv.config();
+
 import api from './routes/api';
 import web from './routes/web';
 
-dotenv.config();
 
 const app = express();
 
@@ -52,7 +53,7 @@ app.use((req, res, next) => {
  * Register routes
  */
 // static
-app.use('/static', express.static(path.join(__dirname, 'public')))
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 app.use('/api', api);
 app.use('/', web);
