@@ -1,7 +1,6 @@
 import path from 'path';
 import dotenv from 'dotenv';
 import express, { Request, Response, NextFunction } from 'express';
-import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
 import session from 'express-session';
@@ -17,7 +16,7 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(helmet());
+app.disable('x-powered-by')
 app.use(compression());
 app.use(morgan('tiny'));
 app.use(express.json());
