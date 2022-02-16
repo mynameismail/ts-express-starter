@@ -1,9 +1,13 @@
 import path from 'path';
 import dotenv from 'dotenv';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
+import session from 'express-session';
+
+import api from './routes/api';
+import web from './routes/web';
 
 dotenv.config();
 
@@ -19,35 +23,55 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+/**
+ * Setup session
+ */
+const appsecret = process.env.APP_SECRET || 'secret';
+app.use(session({
+    secret: appsecret,
+    resave: false,
+    saveUninitialized: false
+}));
+
+declare module 'express-session' {
+    interface SessionData {
+        flash: any;
+        auth: any;
+    }
+}
+
+// flash session
+app.use((req, res, next) => {
+    res.locals.flash = req.session.flash || {};
+    req.session.flash = {};
+    next();
+});
+
+
+/**
+ * Register routes
+ */
 // static
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
-
-// api routes
-var api = express.Router();
-api.get('/', (req, res) => {
-    res.send({ 'hello': 'hai' });
-});
-
 app.use('/api', api);
+app.use('/', web);
 
-
-// web routes
-app.get('/', (req, res) => {
-    res.render('index');
-});
-
-
-// handle 404 and 500
-app.use((req, res, next) => {
+// handle 404
+app.use((req, res) => {
     res.status(404).send('page not found');
 });
 
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    res.status(500).send('something wrong');
+// handle 500
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    if (process.env.APP_ENV === 'production') {
+        return res.status(500).send('something wrong');
+    }
+    next(err);
 });
 
-
-// run server
-const port = process.env.APP_PORT;
+/**
+ * Run server
+ */
+const port = Number(process.env.APP_PORT) || 3000;
 app.listen(port, () => console.log(`server running on port ${port}`));
