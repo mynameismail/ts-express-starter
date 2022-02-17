@@ -63,7 +63,7 @@ app.use((req, res) => {
 });
 
 // handle 500
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (process.env.APP_ENV === 'production') {
         return res.status(500).send('something wrong');
     }
