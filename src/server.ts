@@ -7,9 +7,12 @@ import session from 'express-session';
 
 dotenv.config();
 
+import { init as initMongo } from './services/mongo';
 import api from './routes/api';
 import web from './routes/web';
 
+
+initMongo();
 
 const app = express();
 
@@ -26,9 +29,9 @@ app.use(express.urlencoded({ extended: true }));
 /**
  * Setup session
  */
-const appsecret = process.env.APP_SECRET || 'secret';
+const appSecret = process.env.APP_SECRET || 'secret';
 app.use(session({
-    secret: appsecret,
+    secret: appSecret,
     resave: false,
     saveUninitialized: false
 }));
