@@ -1,8 +1,13 @@
 import mongoose, { Schema } from 'mongoose';
 
-const userSchema = new Schema({
+interface UserAttributes {
+    username: string;
+    phone: string;
+}
+
+const schema = new Schema<UserAttributes>({
     username: String,
     phone: String
 });
 
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.model<UserAttributes>('User', schema);
