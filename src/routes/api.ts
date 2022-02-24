@@ -1,15 +1,11 @@
 import { Router } from 'express';
-import { User } from '../models/user';
+
+import * as userController from '../controllers/user-controller';
 
 const api = Router();
 
-api.get('/', (req, res) => {
-    return res.send({ 'hello': 'hai' });
-});
+api.get('/', (req, res) => { return res.send({ 'hello': 'hai' }); });
 
-api.get('/users', async (req, res) => {
-    let users = await User.find();
-    return res.send(users);
-});
+api.get('/users', userController.userList);
 
 export default api;
